@@ -21,7 +21,7 @@ var corsOptions = {
 };
 
 // MongoDB Connection
-mongoose.connect("mongodb+srv://haidedang:Haidang91@cottagecore.qyveh.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority", error => {
+mongoose.connect(process.env.MONGODB_URI, error => {
     if (error) {
         console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
         throw error;
