@@ -6,6 +6,8 @@ const upload = require("./upload");
 const cors = require("cors");
 const mongoose = require('mongoose')
 const Image = require('./models/image')
+
+const PORT = process.env.PORT || 8080
 const server = express();
 
 cloudinary.config({
@@ -65,6 +67,6 @@ server.post('/image-upload', (req, res) => {
         .catch((err) => res.status(400).json(err))
 })
 
-server.listen(8080 ,() => {
-    console.log("Server started!");
+server.listen(PORT ,() => {
+    console.log(`Server started! Listening on ${PORT}`);
 });
