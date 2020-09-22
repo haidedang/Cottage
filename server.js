@@ -35,7 +35,12 @@ server.use(formData.parse())
 
 server.use(cors(corsOptions));
 
+server.get('/', function (req, res) {
+    res.send('Welcome at the cottage dream')
+})
+
 server.post("/upload", upload);
+
 
 server.post('/image-upload', (req, res) => {
 
