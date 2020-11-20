@@ -17,10 +17,10 @@ cloudinary.config({
 })
 
 
-var corsOptions = {
+/* var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
-};
+}; */
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, error => {
@@ -35,7 +35,9 @@ mongoose.set('debug', true);
 server.use(formData.parse())
 
 
-server.use(cors(corsOptions));
+//server.use(cors(corsOptions));
+
+server.use(cors());
 
 server.get('/', function (req, res) {
     res.send('Welcome at the cottage dream')
