@@ -67,6 +67,18 @@ server.post('/image-upload', (req, res) => {
         .catch((err) => res.status(400).json(err))
 })
 
+// Download path 
+server.get('/freebies', (req, res)  => {
+    res.download('./assets/gifs.rar', 'freebieGifs.rar', function(err) {
+        if(err){
+            console.log(err)
+        } else {
+            console.log('File sent')
+        }
+    })
+})
+    
+
 server.listen(PORT ,() => {
     console.log(`Server started! Listening on ${PORT}`);
 });
