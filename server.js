@@ -37,7 +37,13 @@ server.use(formData.parse());
 
 //server.use(cors(corsOptions));
 
-server.use(cors());
+/* server.use(cors());
+ */
+
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); 
+  next()
+})
 
 server.get("/", function (req, res) {
   res.send("Welcome at the cottage dream");
