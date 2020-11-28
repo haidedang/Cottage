@@ -6,6 +6,7 @@ const upload = require("./upload");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Image = require("./models/image");
+const User = require("./models/user");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
@@ -72,56 +73,29 @@ server.post("/image-upload", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-// Download path
-server.get("/freebies/:email", (req, res) => {
-  /* res.download('./assets/gifs.rar', 'freebieGifs.rar', function(err) {
-        if(err){
-            console.log(err)
-        } else {
-            console.log('File sent')
-        }
-    }) */
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "thecottagedreamers@gmail.com",
-      pass: process.env.EMAIL_PASSWORD, // naturally, replace both with your real credentials or an application-specific password
-    },
-  });
-
-  const options = {
-    viewEngine: {
-      partialsDir: __dirname + "/views/partials",
-      layoutsDir: __dirname + "/views/layouts",
-      extname: ".hbs"
-    },
-    extName: ".hbs",
-    viewPath: "views"
-  };
-  
-
-  transporter.use(
-    "compile",
-    hbs(options)
-  );
-
-  const mailOptions = {
-    from: "thecottagedreamers@gmail.com",
-    to: req.params.email,
-    subject: "Here is your Gift from Us :)",
-    template: "index",
-    attachments:[{path:"./assets/gifs.rar"}]
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
+server.get("/freebies", (req, res) => {
+  res.download('./assets/gifs.rar', 'freebieGifs.rar', function(err) {
+    if(err){
+        console.log(err)
     } else {
-      console.log("Email sent:" + info.response);
-      res.send('OK')
+        console.log('File sent')
     }
-  });
+})
+})
+
+// Save email to DB 
+server.get("/:email", (req, res) => {
+
+    const newUser = new User();
+    newUser.email = req.params.email;
+    newUser.save((err, saved) => {
+      if(err){
+        console.log(err)
+      }
+      res.json({ status: 'OK' });
+    });
+  
+  
 });
 
 server.listen(PORT, () => {
