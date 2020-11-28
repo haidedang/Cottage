@@ -74,7 +74,7 @@ server.post("/image-upload", (req, res) => {
 });
 
 server.get("/freebies", (req, res) => {
-  res.download('./assets/gifs.zip', 'freebieGifs.zip', function(err) {
+  res.download('./assets/freebieGifs.zip', 'freebieGifs.zip', function(err) {
     if(err){
         console.log(err)
     } else {
