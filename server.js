@@ -9,15 +9,28 @@ const Image = require("./models/image");
 const User = require("./models/user");
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
+const {google} = require("googleapis"); 
+const OAuth2 = google.auth.OAuth2; 
+
+const oauth2Client = new OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+)
+
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
+});
+const accessToken = oauth2Client.getAccessToken()
 
 const PORT = process.env.PORT || 8080;
 const server = express();
 
-cloudinary.config({
+/* cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
-});
+}); */
 
 /* var corsOptions = {
     origin: '*',
@@ -25,14 +38,14 @@ cloudinary.config({
 }; */
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, (error) => {
+/* mongoose.connect(process.env.MONGODB_URI, (error) => {
   if (error) {
     console.error("Please make sure Mongodb is installed and running!"); // eslint-disable-line no-console
     throw error;
   }
-});
+}); */
 
-mongoose.set("debug", true);
+/* mongoose.set("debug", true); */
 
 server.use(formData.parse());
 
